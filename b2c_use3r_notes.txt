@@ -1,0 +1,71 @@
+
+site key
+6Lej_8QZAAAAANJ7u93ZShCu4kWjr1kc1zvMlZQ1
+secrect key
+6Lej_8QZAAAAALL9xpKb9AQL7_AiUGCvapRtw3gb
+
+
+
+
+CRUD on b2c users
+https://docs.microsoft.com/en-us/graph/api/user-post-users?view=graph-rest-1.0&tabs=http
+
+content-type application/json
+
+https://graph.microsoft.com/v1.0/users('fbeec801-b522-4188-be78-fea233bf51eb') 
+
+create user - then update extensions
+
+POST
+https://graph.microsoft.com/beta/users
+{
+    "accountEnabled": true,
+    "displayName": "test",
+    "mailNickname": "testuser",
+    "identities": [
+        {
+            "signInType": "emailAddress",
+            "issuer": "mymeetings365b2c.onmicrosoft.com",
+            "issuerAssignedId": "testuser@schaufele.com"
+        }
+    ],
+    "passwordProfile": {
+        "password": "2019Fiona!",
+        "forceChangePasswordNextSignIn": true
+    }
+}
+
+add
+
+
+
+create/invite user
+
+
+POST
+https://graph.microsoft.com/v1.0/invitations
+
+{
+  "invitedUserEmailAddress": "jack.schaufele@gmail.com",
+  "inviteRedirectUrl": "http://localhost:6420?meetingid=1234"
+}
+
+invitation will be in the response
+
+
+
+https://docs.microsoft.com/en-us/graph/extensibility-open-users?context=graph%2Fapi%2F1.0&view=graph-rest-1.0
+
+
+https://graph.microsoft.com/v1.0/users('fbeec801-b522-4188-be78-fea233bf51eb')  - (/extensions) pulls user defined fields
+
+
+POST https://graph.microsoft.com/v1.0/me/extensions
+Content-type: application/json
+{
+    "@odata.type":"beec801-b522-4188-be78-fea233bf51eb",**** note the users extension name is the user ID
+    "extensionName":"com.contoso.roamingSettings",
+    "theme":"dark",
+    "color":"purple",
+    "lang":"Japanese"
+}

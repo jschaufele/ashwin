@@ -1,0 +1,77 @@
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Navigation from "../landingpage/components/navigation";
+import Header from "../landingpage/components/header";
+import Features from "../landingpage/components/features";
+import About from "../landingpage/components/about";
+import Contact from "../landingpage/components/contact";
+import landingPageData from "../landingpage/data/data.json";
+import { Helmet } from "react-helmet";
+import { Loadingthrobber } from "../blocks/loadingthrobber";
+import useScript from "react-script-hook";
+import { isWindow } from "../helpers/utilities";
+
+const LandingPage = ({ children }) => {
+	console.log("---LandingPage page--->secured pages");
+	const router = useRouter();
+	const [hideThrobber, setHideThrobber] = useState(false); // shows the throbber
+	const [loadingScript, scriptError] = useScript({ src: "/secure/landingpage/js/compressed.js" });
+	if (scriptError) {
+		router.push(`/secure/?error=scriptloginerror`);
+		return <></>;
+	}
+
+	useEffect(() => {
+		if (!loadingScript) {
+			setHideThrobber(true);
+		}
+	}, [loadingScript]);
+	const onLogonClick = function (e) {
+		console.log("--->LandingPage login 1---");
+		return (
+			<>
+				<Loadingthrobber />
+				{isWindow ? router.push("/secure/authorize?action=signin") : ""}
+			</>
+		);
+	};
+
+	//compressed all the scripts so they'd load correctly
+	// this is the landing page I won't be using JQ anywhere else
+	// NextJs shouldn't load any of the scripts on otrher pages
+
+	return (
+		<>
+			<Helmet>
+				<meta charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<link rel="shortcut icon" href="/secure/landingpage/img/favicon.ico" type="image/x-icon" />
+				<link rel="apple-touch-icon" href="/secure/landingpage/img/apple-touch-icon.png" />
+				<link rel="apple-touch-icon" sizes="72x72" href="/secure/landingpage/img/apple-touch-icon-72x72.png" />
+				<link rel="apple-touch-icon" sizes="114x114" href="/secure/landingpageimg/apple-touch-icon-114x114.png" />
+
+				<link rel="stylesheet" type="text/css" href="/secure/landingpage/css/index.css" />
+				<link rel="stylesheet" type="text/css" href="/secure/landingpage/css/bootstrap.css" />
+				<link rel="stylesheet" type="text/css" href="/secure/landingpage/fonts/font-awesome/css/font-awesome.css" />
+				<link rel="stylesheet" type="text/css" href="/secure/landingpage/css/style.css" />
+				<link rel="stylesheet" type="text/css" href="/secure/landingpage/css/nivo-lightbox/nivo-lightbox.css" />
+				<link rel="stylesheet" type="text/css" href="/secure/landingpage/css/nivo-lightbox/default.css" />
+				<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+				<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" />
+				<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900" rel="stylesheet" />
+				<title>MyMeetings 365</title>
+			</Helmet>
+
+			<Loadingthrobber hide={hideThrobber} />
+			<div style={hideThrobber ? { display: "" } : { display: "none" }}>
+				<Navigation login={onLogonClick} />
+				<Header data={landingPageData.Header} />
+				<Features data={landingPageData.Features} />
+				<About data={landingPageData.About} />
+				<Contact data={landingPageData.Contact} />
+			</div>
+		</>
+	);
+	//	}hide={hideThrobber}
+};
+export default LandingPage; //
