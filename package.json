@@ -28,6 +28,7 @@
 		"loglevel": "^1.7.0",
 		"loglevel-plugin-prefix": "^0.8.4",
 		"next": "9.5.2",
+		"next-transpile-modules": "^4.1.0",
 		"react": "16.13.1",
 		"react-dom": "16.13.1",
 		"react-frame-component": "^4.1.3",

@@ -1,6 +1,8 @@
-module.exports = {
+const withTM = require('next-transpile-modules')(['@rjsf/fluent-ui', 'office-ui-fabric-react']);
+
+module.exports = withTM({
 	basePath: "/secure",
-};
+});
 
 // const {
 //     PHASE_DEVELOPMENT_SERVER,

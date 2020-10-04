@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Form from "@rjsf/core"
-//import Form from "@rjsf/fluent-ui"
+// import Form from "@rjsf/core"
+import Form from "@rjsf/fluent-ui"
 import { Customizer, Panel, IFocusTrapZoneProps, TextField } from "@fluentui/react";
 
 const schema = {
